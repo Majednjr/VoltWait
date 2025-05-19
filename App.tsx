@@ -1,13 +1,7 @@
-import { ScreenContent } from 'components/ScreenContent';
-import { StatusBar } from 'expo-status-bar';
-
+// import { useEffect } from 'react';
+import { ExpoRoot } from 'expo-router';
 import './global.css';
 
 export default function App() {
-  return (
-    <>
-      <ScreenContent title="Home" path="App.tsx" />
-      <StatusBar style="auto" />
-    </>
-  );
+  return <ExpoRoot context={require.context('./app')} />;
 }
