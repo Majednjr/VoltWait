@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import { useContext, createContext, useState, useEffect } from 'react';
 import supabase from 'services/supabase.js';
 
@@ -12,10 +13,8 @@ const GlobalProvider = ({ children }) => {
   const [userDetails, setUserDetails] = useState(null);
 
   useEffect(() => {
-    // Check current session on mount
     checkUser();
 
-    // Subscribe to auth state changes
     const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
       const currentUser = session?.user || null;
       setUser(currentUser);
@@ -39,8 +38,8 @@ const GlobalProvider = ({ children }) => {
       const {
         data: { session },
       } = await supabase.auth.getSession();
-      const currentUser = session?.user || null;
 
+      const currentUser = session?.user || null;
       setUser(currentUser);
       setIsLoggedIn(!!currentUser);
 
@@ -67,15 +66,20 @@ const GlobalProvider = ({ children }) => {
     }
   };
 
-  const handleSignOut = async () => {
+  const signOut = async () => {
     setIsLoading(true);
     try {
-      await supabase.auth.signOut();
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+
+      // Clear state after sign-out
       setUser(null);
       setIsLoggedIn(false);
       setUserDetails(null);
-    } catch (error) {
-      console.error('Error signing out:', error);
+
+      router.replace('/(auth)/SignIn');
+    } catch (err) {
+      console.error('Error signing out:', err);
     } finally {
       setIsLoading(false);
     }
@@ -90,7 +94,7 @@ const GlobalProvider = ({ children }) => {
         setUser,
         isLoading,
         setIsLoading,
-        signOut: handleSignOut,
+        signOut,
         userDetails,
         setUserDetails,
       }}>

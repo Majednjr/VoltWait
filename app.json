@@ -29,7 +29,19 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#ffffff",
+        "config": {
+          "googleMaps": {
+            "apiKey": "AIzaSyBD9VBu3ES8RfbSlm38w6Xsn60gfDzlmZA"
+          }
+        }
+      },
+      "package": "com.karimhamdan.myexpoapp"
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "f8c7a91b-6a26-4276-a20c-f517327bdbae"
       }
     }
   }
