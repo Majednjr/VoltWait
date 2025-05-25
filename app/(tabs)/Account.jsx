@@ -1,12 +1,13 @@
 import { useGlobalContext } from 'contexts/globalProvider.jsx';
-import { router } from 'expo-router';
+import { router, useNavigation } from 'expo-router';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { logout } from 'services/apiAuth.js';
 import { useEffect } from 'react';
 
 const Account = () => {
-  const { userDetails } = useGlobalContext();
+  const { userDetails, signOut } = useGlobalContext();
+  const navigation = useNavigation();
 
   // Redirect to login if no user details are available
   useEffect(() => {
@@ -17,12 +18,7 @@ const Account = () => {
 
   async function handleLogout() {
     try {
-      const error = await logout();
-      if (error) {
-        console.error('Logout error:', error);
-      } else {
-        router.replace('/(auth)/SignIn');
-      }
+      await signOut(); // <- this will handle supabase signOut + update global state
     } catch (err) {
       console.error('Logout failed:', err);
     }

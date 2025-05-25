@@ -9,7 +9,9 @@ const GoBack = ({ whereTo, handleClick }) => {
         if (handleClick) {
           handleClick();
         } else {
-          router.back();
+          router.push(
+            `/${whereTo}` // Navigate to the specified route
+          );
         }
       }}>
       <View>

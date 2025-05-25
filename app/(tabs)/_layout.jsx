@@ -43,7 +43,7 @@ const TabsLayout = () => {
     },
     {
       name: 'More',
-      iconName: 'ellipsis-h',
+      iconName: 'ellipsis-h ',
     },
   ];
 

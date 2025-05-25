@@ -1,8 +1,11 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 
 const Logo = () => {
   return (
     <View style={styles.container}>
+      {/* add image */}
+      <Image source={require('../assets/logo.jpg')} style={{ width: 100, height: 100 }} />
+      {/* Placeholder for logo image */}
       <Text style={styles.text}>VoltWait</Text>
     </View>
   );

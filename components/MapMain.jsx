@@ -7,21 +7,25 @@ import {
   Dimensions,
   ActivityIndicator,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, PROVIDER_GOOGLE, PROVIDER_DEFAULT } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { FontAwesome } from '@expo/vector-icons';
 import { router } from 'expo-router';
 
 const { width, height } = Dimensions.get('window');
 
-const GOOGLE_MAPS_API_KEY = 'AIzaSyACIPX5XFP26M8U8V0fDYESwGY4A7domWc'; // replace this
+const GOOGLE_MAPS_API_KEY = 'AIzaSyBD9VBu3ES8RfbSlm38w6Xsn60gfDzlmZA'; // replace this
 
 const MapMain = () => {
   const [location, setLocation] = useState(null);
   const [stations, setStations] = useState([]);
   const [selectedStation, setSelectedStation] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  // Determine the map provider based on platform
+  const mapProvider = Platform.OS === 'ios' ? PROVIDER_DEFAULT : PROVIDER_GOOGLE;
 
   useEffect(() => {
     (async () => {
@@ -33,6 +37,7 @@ const MapMain = () => {
 
       const loc = await Location.getCurrentPositionAsync({});
       setLocation(loc.coords);
+      console.log('Location:', loc.coords);
       fetchChargingStations(loc.coords.latitude, loc.coords.longitude);
     })();
   }, []);
@@ -94,6 +99,7 @@ const MapMain = () => {
     <View style={styles.container}>
       <MapView
         style={StyleSheet.absoluteFill}
+        provider={mapProvider}
         showsUserLocation
         initialRegion={{
           latitude: location.latitude,

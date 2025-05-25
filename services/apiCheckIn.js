@@ -140,9 +140,9 @@ export async function checkIsBanned(userId) {
   if (!banDate) {
     return false;
   }
-  const isMoreThan72Hours = dayjs().diff(dayjs(banDate), 'hour') < 72;
+  const isLessThan72Hours = dayjs().diff(dayjs(banDate), 'hour') < 72;
 
-  return isMoreThan72Hours;
+  return isLessThan72Hours;
 }
 
 export async function getRewardCount(userId) {
